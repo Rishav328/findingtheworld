@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#121528" />
+  <title>Lat's Lost Path</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <audio id="bgMusic" src="song.mp3" loop preload="auto"></audio>
+  <button id="musicToggle" class="music-toggle" type="button" aria-label="Pause background music" title="Music: song.mp3">
+    <span class="music-icon" aria-hidden="true">♫</span>
+    <span class="music-label">Music</span>
+  </button>
+
+  <main id="app" class="app">
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div id="stars" class="stars" aria-hidden="true"></div>
+
+    <section id="introScene" class="scene scene-active" aria-label="Story introduction">
+      <div class="forest-layer forest-back"></div>
+      <div class="forest-layer forest-front"></div>
+
+      <div class="moon" aria-hidden="true"></div>
+
+      <div id="latIntro" class="character character-lat character-nervous" aria-label="Lat, a nervous little boy">
+        <div class="character-shadow"></div>
+        <div class="hair"></div>
+        <div class="head">
+          <div class="ear ear-left"></div>
+          <div class="ear ear-right"></div>
+          <div class="face">
+            <div class="eyebrow eyebrow-left"></div>
+            <div class="eyebrow eyebrow-right"></div>
+            <div class="eye eye-left"><span></span></div>
+            <div class="eye eye-right"><span></span></div>
+            <div class="blush blush-left"></div>
+            <div class="blush blush-right"></div>
+            <div class="mouth"></div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="scarf"></div>
+          <div class="shirt"></div>
+          <div class="arm arm-left"></div>
+          <div class="arm arm-right"></div>
+          <div class="leg leg-left"></div>
+          <div class="leg leg-right"></div>
+        </div>
+      </div>
+
+      <div class="dialogue-card intro-dialogue">
+        <div class="speaker-row">
+          <span class="speaker-dot"></span>
+          <span id="introSpeaker" class="speaker-name">Lat</span>
+        </div>
+        <p id="introText" class="dialogue-text"></p>
+        <div class="dialogue-actions">
+          <span id="introProgress" class="progress-label">1 / 4</span>
+          <button id="nextIntro" class="primary-btn">
+            Next
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="puzzleScene" class="scene" aria-label="Path puzzle">
+      <header class="game-header">
+        <div>
+          <p class="eyebrow-label">THE LOST PATH</p>
+          <h1>Help Lat find his way back</h1>
+          <p>Har piece ko matching step par drag karo. Mobile par drag ya tap—dono work karte hain.</p>
+        </div>
+        <div class="progress-orb">
+          <span id="solvedCount">0</span><small>/ 4</small>
+        </div>
+      </header>
+
+      <div class="puzzle-layout">
+        <div class="puzzle-world">
+        <div id="door" class="door" aria-label="A magical closed door">
+          <div class="door-glow"></div>
+          <div class="door-frame">
+            <div class="door-panel">
+              <div class="door-symbol">✦</div>
+              <div class="door-knob"></div>
+            </div>
+          </div>
+          <p class="door-label">Someone is waiting...</p>
+        </div>
+
+        <div class="path-area">
+          <div class="path-line"></div>
+
+          <div class="path-slot" data-key="college" tabindex="0" role="button" aria-label="College path slot">
+            <span class="slot-number">01</span>
+            <span class="slot-label">College</span>
+            <span class="slot-check">✓</span>
+          </div>
+
+          <div class="path-slot" data-key="health" tabindex="0" role="button" aria-label="Health path slot">
+            <span class="slot-number">02</span>
+            <span class="slot-label">Health</span>
+            <span class="slot-check">✓</span>
+          </div>
+
+          <div class="path-slot" data-key="fear" tabindex="0" role="button" aria-label="Fear path slot">
+            <span class="slot-number">03</span>
+            <span class="slot-label">Fear</span>
+            <span class="slot-check">✓</span>
+          </div>
+
+          <div class="path-slot" data-key="soul" tabindex="0" role="button" aria-label="Soul path slot">
+            <span class="slot-number">04</span>
+            <span class="slot-label">Soul</span>
+            <span class="slot-check">✓</span>
+          </div>
+        </div>
+
+        <div id="latWalker" class="mini-character lat-walker" aria-hidden="true">
+          <span class="mini-hair"></span>
+          <span class="mini-head"></span>
+          <span class="mini-body"></span>
+        </div>
+      </div>
+
+      <section class="pieces-panel" aria-label="Puzzle pieces">
+        <div class="pieces-heading">
+          <div>
+            <p class="eyebrow-label">LIFE PIECES</p>
+            <h2>Build the path</h2>
+          </div>
+          <p id="puzzleHint" class="hint-text">Select a piece, then tap its matching step.</p>
+        </div>
+
+        <div id="pieces" class="pieces-grid">
+          <button class="puzzle-piece" draggable="true" data-key="fear">
+            <span class="piece-icon">☁</span>
+            <span>
+              <strong>Fear</strong>
+              <small>Courage begins softly.</small>
+            </span>
+          </button>
+          <button class="puzzle-piece" draggable="true" data-key="college">
+            <span class="piece-icon">✎</span>
+            <span>
+              <strong>College</strong>
+              <small>One step at a time.</small>
+            </span>
+          </button>
+          <button class="puzzle-piece" draggable="true" data-key="soul">
+            <span class="piece-icon">♡</span>
+            <span>
+              <strong>Soul</strong>
+              <small>Keep the heart gentle.</small>
+            </span>
+          </button>
+          <button class="puzzle-piece" draggable="true" data-key="health">
+            <span class="piece-icon">✚</span>
+            <span>
+              <strong>Health</strong>
+              <small>Care includes yourself.</small>
+            </span>
+          </button>
+        </div>
+      </section>
+      </div>
+
+      <div id="achievement" class="achievement" role="status" aria-live="polite">
+        <span class="achievement-icon">★</span>
+        <div>
+          <small>ACHIEVEMENT UNLOCKED</small>
+          <strong id="achievementText">College Sorted</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="reunionScene" class="scene reunion-scene" aria-label="The reunion">
+      <div class="reunion-sky"></div>
+      <div class="reunion-ground"></div>
+
+      <div class="open-door-wrap">
+        <div class="open-door-light"></div>
+        <div class="open-door">
+          <div class="door-side door-side-left"></div>
+          <div class="door-side door-side-right"></div>
+        </div>
+      </div>
+
+      <div id="hugCharacters" class="hug-characters">
+        <div class="hug-person hug-lat">
+          <span class="hug-hair"></span>
+          <span class="hug-head"></span>
+          <span class="hug-body"></span>
+          <span class="hug-arm"></span>
+        </div>
+        <div class="hug-person hug-friend">
+          <span class="hug-hair"></span>
+          <span class="hug-head"></span>
+          <span class="hug-body"></span>
+          <span class="hug-arm"></span>
+        </div>
+        <div class="heart-burst" aria-hidden="true">
+          <span>♥</span><span>♥</span><span>♥</span>
+        </div>
+      </div>
+
+      <div class="dialogue-card reunion-dialogue">
+        <div class="speaker-row">
+          <span class="speaker-dot reunion-dot"></span>
+          <span id="reunionSpeaker" class="speaker-name">Lat</span>
+        </div>
+        <p id="reunionText" class="dialogue-text"></p>
+        <div class="dialogue-actions">
+          <span id="reunionProgress" class="progress-label">1 / 5</span>
+          <button id="nextReunion" class="primary-btn">
+            Next
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="finalScene" class="scene final-scene" aria-label="A final message">
+      <div class="final-message-wrap">
+        <p class="final-kicker">A small message, from the heart</p>
+        <div id="typewriterText" class="typewriter-text" aria-live="polite" tabindex="0" title="Tap to reveal the full message"></div>
+        <div class="final-actions">
+          <button id="skipFinal" class="text-btn">Read instantly</button>
+          <button id="continueFinal" class="ghost-btn hidden">Continue with care →</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="endingScene" class="scene ending-scene" aria-label="Ending">
+      <div class="ending-card">
+        <div class="ending-icon">♡</div>
+        <p class="eyebrow-label">THE REST OF THE PATH</p>
+        <h2>Some bonds do not become smaller in silence.</h2>
+        <p>
+          Rishav is trying to sort his life, become healthier, and reach you as a calmer and better person.
+          His care is real, but it is not a demand. Your comfort, freedom, health, and happiness matter more than any immediate answer.
+        </p>
+        <blockquote>
+          “I do not want to hold your sky. I only want to be someone who protects your freedom to fly.”
+        </blockquote>
+        <div class="ending-actions">
+          <button id="replayBtn" class="primary-btn">Replay the story</button>
+        </div>
+        <small class="ending-note">Made with love, care, and respect—not to demand an answer, only to leave something honest at your door.</small>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
